@@ -125,17 +125,29 @@ class LinkWell extends StatelessWidget {
 
   /// _initialize function
   _initialize() {
-    // Use passed in regular expression string if provided, otherwise default
-    var exp = regEx != null ? RegExp(regEx!) : Helper.regex;
+// Use passed in regular expression string if provided, otherwise default
+    // var urlExp = urlRegEx != null ? RegExp(urlRegEx!) : Helper.regex;
+    var urlRegex2 =
+        r'''[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)''';
+    var urlExp = RegExp(urlRegex2);
+    // const emailRegex =
+    //     r'''(?:[a-z0-9!#$%&'*+=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])''';
+    const emailRegex =
+        r'''[a-z0-9!#$%&'*+=?^_‘{|}~-]+(?:\.[a-z0-9!#$%&'*+=?^_‘{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?''';
+    var emailExp = RegExp(emailRegex);
 
     /// An Iterable with variable name matches
     /// Is assigned to our regular expression with
     /// allMatched method cal
-    Iterable<RegExpMatch> matches = exp.allMatches(this.text);
+    Iterable<RegExpMatch> urlMatches = urlExp.allMatches(this.text);
+    Iterable<RegExpMatch> emailMatches = emailExp.allMatches(this.text);
 
     /// We now run a forEach Loop to add our matche to
     /// the links List
-    matches.forEach((match) {
+    urlMatches.forEach((match) {
+      this.links.add(text.substring(match.start, match.end));
+    });
+    emailMatches.forEach((match) {
       this.links.add(text.substring(match.start, match.end));
     });
 
