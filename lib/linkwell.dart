@@ -221,7 +221,7 @@ class LinkWell extends StatelessWidget {
       /// var wid which represents widget
       var wid = t.split(value.trim());
 
-      /// if not value is found after splitting
+      /// if no value is found after splitting
       /// we simple place text inside TextSpan
       /// and add to textSpanWidget
       if (wid[0] != '') {
